@@ -35,12 +35,16 @@ class ExchangerViewModel: ObservableObject {
     }
     
     var rate: Double {
+        exchangeModel.rate
+    }
+    
+    var formattedRate: String {
         exchangeModel.rate.format(f: ".2")
     }
     
     var fromAmount: Double {
         get {
-            exchangeModel.fromAmount.format(f: ".2")
+            exchangeModel.fromAmount
         }
         set {
             guard newValue <= limitAmount else { return }
@@ -49,7 +53,15 @@ class ExchangerViewModel: ObservableObject {
     }
     
     var toAmount: Double {
+        exchangeModel.toAmount
+    }
+    
+    var formattedToAmount: String {
         exchangeModel.toAmount.format(f: ".2")
+    }
+    
+    var formattedFromAmount: String {
+        exchangeModel.fromAmount.format(f: ".2")
     }
     
     var limitAmount: Double {
@@ -57,7 +69,7 @@ class ExchangerViewModel: ObservableObject {
     }
     
     var rateText: String {
-        "1 \(from) = \(rate) \(to)"
+        "1 \(from) = \(formattedRate) \(to)"
     }
     
     init(exchangerService: ExchangerServiceProtocol) {

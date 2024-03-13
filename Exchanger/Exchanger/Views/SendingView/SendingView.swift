@@ -31,12 +31,12 @@ struct SendingView: View {
             Spacer()
             
             if isReciever {
-                Text(viewModel.toAmount)
+                Text(viewModel.formattedToAmount)
                     .foregroundStyle(.black)
                     .font(.system(size: 32, weight: .bold))
                     .multilineTextAlignment(.trailing)
             } else {
-                TextField(viewModel.fromAmount, text: $inputAmount, onEditingChanged: { isBegin in
+                TextField(viewModel.formattedFromAmount, text: $inputAmount, onEditingChanged: { isBegin in
                     isEditing = isBegin
                 })
                 .keyboardType(.numberPad)
