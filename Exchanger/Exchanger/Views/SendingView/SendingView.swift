@@ -9,12 +9,17 @@ import SwiftUI
 import Combine
 
 struct SendingView: View {
+    private enum Field: Int {
+        case inputAmount
+    }
     @State private var isShowingSheet = false
     @ObservedObject var viewModel: ExchangerViewModel
     @Binding var inputAmount: String
     @State var isReciever: Bool = false
     
     @State private var isEditing: Bool = false
+    
+    @FocusState private var focusedField: Field?
     
     var body: some View {
         HStack {
@@ -39,11 +44,19 @@ struct SendingView: View {
                 TextField(viewModel.formattedFromAmount, text: $inputAmount, onEditingChanged: { isBegin in
                     isEditing = isBegin
                 })
+                .focused($focusedField, equals: .inputAmount)
                 .keyboardType(.numberPad)
                 .foregroundStyle(Double(inputAmount) ?? 0 < viewModel.limitAmount ? ColorManager.lightBlue : ColorManager.lightPink)
                 .autocorrectionDisabled()
                 .font(.system(size: 32, weight: .bold))
                 .multilineTextAlignment(.trailing)
+                .toolbar {
+                    ToolbarItem(placement: .keyboard) {
+                        Button("Done") {
+                            focusedField = nil
+                        }
+                    }
+                }
             }
             
         }
