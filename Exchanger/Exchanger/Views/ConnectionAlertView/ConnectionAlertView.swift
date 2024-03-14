@@ -54,10 +54,11 @@ struct ConnectionAlertModifier: ViewModifier {
     func body(content: Content) -> some View {
         ZStack {
             content
-            HStack(alignment: .top) {
+            VStack {
                 if show {
                     connectionAlert
                 }
+                Spacer()
             }
         }
     }
